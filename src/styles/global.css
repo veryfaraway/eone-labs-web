@@ -2,8 +2,21 @@
 
 @layer base {
   :root {
-    --color-bg: #090a0f;
-    --color-card: #13151f;
-    --color-border: #232738;
+    --color-bg: #0b0c10;
+    --color-surface: #12131a;
+    --color-border: rgba(255, 255, 255, 0.08);
   }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: -apple-system, BlinkMacSystemFont, "Pretendard Variable", Pretendard, system-ui, sans-serif;
+  }
+}
+
+.font-serif-display {
+  font-family: 'Instrument Serif', Georgia, serif;
+}
+
+.font-mono-code {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }

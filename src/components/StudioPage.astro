@@ -1,0 +1,471 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { translations, type Locale } from '../i18n/translations';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = translations[locale];
+---
+
+<Layout title={t.meta.title} description={t.meta.description} locale={locale}>
+  <div class="min-h-screen flex flex-col justify-between selection:bg-[#f5f5f7] selection:text-black">
+    
+    <!-- Top Bar / Navigation -->
+    <header class="border-b border-white/[0.08] sticky top-0 z-50 bg-[#0b0c10]/90 backdrop-blur-md">
+      <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        
+        <!-- Brand & Studio Tag -->
+        <div class="flex items-center gap-4">
+          <a href={locale === 'ko' ? '/' : '/en'} class="flex items-center gap-2 group">
+            <span class="w-2.5 h-2.5 rounded-full bg-white group-hover:scale-125 transition-transform duration-300"></span>
+            <span class="text-sm font-semibold tracking-wider uppercase text-white font-mono-code">Eone Labs</span>
+          </a>
+          <span class="hidden sm:inline-block text-[11px] text-neutral-400 font-mono-code tracking-wider border-l border-white/10 pl-4 uppercase">
+            Studio / Seoul
+          </span>
+        </div>
+
+        <!-- Links -->
+        <nav class="flex items-center gap-6 sm:gap-8 text-xs font-mono-code tracking-wide">
+          <a href="#works" class="text-neutral-400 hover:text-white transition-colors uppercase">
+            {t.nav.works}
+          </a>
+          <a href="#about" class="hidden md:inline-block text-neutral-400 hover:text-white transition-colors uppercase">
+            {t.nav.about}
+          </a>
+          <a href="https://blog.eone.one" target="_blank" rel="noopener noreferrer" class="text-neutral-400 hover:text-white transition-colors uppercase flex items-center gap-1 group">
+            <span>{t.nav.notes}</span>
+            <span class="text-[10px] text-neutral-400 group-hover:text-white transition-colors">↗</span>
+          </a>
+          <a href="#contact" class="hidden sm:inline-block text-neutral-400 hover:text-white transition-colors uppercase">
+            {t.nav.contact}
+          </a>
+
+          <!-- Language Switcher -->
+          <div class="flex items-center p-0.5 rounded-full border border-white/10 bg-white/[0.02] text-[11px] font-mono-code">
+            <a
+              href="/"
+              class={`px-2.5 py-0.5 rounded-full transition-all ${
+                locale === 'ko'
+                  ? 'bg-white text-black font-semibold shadow-xs'
+                  : 'text-neutral-400 hover:text-white'
+              }`}
+            >
+              KO
+            </a>
+            <a
+              href="/en"
+              class={`px-2.5 py-0.5 rounded-full transition-all ${
+                locale === 'en'
+                  ? 'bg-white text-black font-semibold shadow-xs'
+                  : 'text-neutral-400 hover:text-white'
+              }`}
+            >
+              EN
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      
+      <!-- HERO SECTION (Awwwards Style Editorial) -->
+      <section class="max-w-7xl mx-auto px-6 pt-20 pb-24 lg:pt-28 lg:pb-32 border-b border-white/[0.08]">
+        
+        <!-- Metadata Header Row -->
+        <div class="flex flex-wrap items-center justify-between gap-4 text-xs font-mono-code text-neutral-400 mb-12 uppercase tracking-wider">
+          <div class="flex items-center gap-3">
+            <span>[ {t.hero.badgeLocation} ]</span>
+            <span>·</span>
+            <span>[ {t.hero.badgeType} ]</span>
+          </div>
+          <div>
+            <span>[ {t.hero.badgeYear} ]</span>
+          </div>
+        </div>
+
+        <!-- Headline -->
+        <div class="max-w-5xl mb-12">
+          <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] tracking-tight leading-[1.1] text-white">
+            <span class="font-serif-display italic font-light text-neutral-300 block mb-2">{t.hero.headlineItalic}</span>
+            <span class="font-bold tracking-[-0.03em]">{t.hero.headlineMain}</span>
+          </h1>
+        </div>
+
+        <!-- Subheadline & Action Row -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-end pt-8 border-t border-white/[0.08]">
+          <div class="md:col-span-8">
+            <p class="text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl font-light">
+              {t.hero.subheadline}
+            </p>
+          </div>
+
+          <div class="md:col-span-4 flex flex-col sm:flex-row md:flex-col items-start md:items-end justify-between gap-4">
+            <!-- Active Pipeline Pill -->
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.02] text-xs font-mono-code text-neutral-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>{t.hero.statusText}</span>
+            </div>
+
+            <a
+              href="#works"
+              class="inline-flex items-center gap-2 text-xs font-mono-code uppercase tracking-wider text-white hover:text-neutral-400 transition-colors"
+            >
+              <span>{t.hero.ctaWorks}</span>
+              <span class="text-sm">↓</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURED WORKS SECTION -->
+      <section id="works" class="max-w-7xl mx-auto px-6 py-24 border-b border-white/[0.08]">
+        
+        <!-- Section Header -->
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-16 pb-6 border-b border-white/[0.08]">
+          <div>
+            <span class="text-xs font-mono-code text-neutral-400 uppercase tracking-widest block mb-2">
+              {t.works.eyebrow}
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+              {t.works.title}
+            </h2>
+          </div>
+          <p class="text-xs font-mono-code text-neutral-400 max-w-md sm:text-right">
+            {t.works.description}
+          </p>
+        </div>
+
+        <div class="space-y-20">
+          
+          <!-- WORK 01: SAMLOG -->
+          <article class="rounded-xl border border-white/[0.1] bg-[#10121a]/60 backdrop-blur-sm overflow-hidden hover:border-white/25 transition-all duration-300">
+            <!-- Top Metadata Strip -->
+            <div class="px-6 py-4 border-b border-white/[0.08] flex flex-wrap items-center justify-between gap-4 text-xs font-mono-code text-neutral-400 bg-white/[0.01]">
+              <div class="flex items-center gap-3">
+                <span class="text-white font-bold">{t.works.samlog.index}</span>
+                <span>/</span>
+                <span class="tracking-wider uppercase">{t.works.samlog.category}</span>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full border border-amber-500/30 text-amber-300 text-[11px] bg-amber-500/10">
+                {t.works.samlog.status}
+              </span>
+            </div>
+
+            <!-- Content Grid: Story Left + Micro-UI Right -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 p-6 sm:p-10">
+              
+              <!-- Story & Description -->
+              <div class="lg:col-span-6 flex flex-col justify-between">
+                <div>
+                  <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 tracking-tight">
+                    {t.works.samlog.title}
+                  </h3>
+                  <p class="text-sm font-medium text-neutral-300 mb-6">
+                    {t.works.samlog.tagline}
+                  </p>
+                  <p class="text-sm text-neutral-400 leading-relaxed font-light mb-8">
+                    {t.works.samlog.problemSolution}
+                  </p>
+                </div>
+
+                <!-- Tags & Details -->
+                <div>
+                  <div class="flex flex-wrap gap-2 mb-6">
+                    {t.works.samlog.tags.map((tag) => (
+                      <span class="px-3 py-1 rounded-full text-xs font-mono-code border border-white/10 bg-white/[0.02] text-neutral-300">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div class="pt-4 border-t border-white/[0.08] flex items-center justify-between text-xs font-mono-code">
+                    <span class="text-neutral-400">Architecture: PWA + Anthropic Claude API</span>
+                    <a href="mailto:contact@eone.one?subject=SamLog Beta Inquiry" class="text-white hover:underline flex items-center gap-1">
+                      <span>Inquire Access</span>
+                      <span>→</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Micro-UI Box: Authentic Component Mockup (Anti-AI Cliché) -->
+              <div class="lg:col-span-6">
+                <div class="rounded-lg border border-white/[0.1] bg-[#0c0d12] p-5 shadow-2xl">
+                  
+                  <!-- Window Mockup Controls -->
+                  <div class="flex items-center justify-between pb-4 mb-4 border-b border-white/[0.08]">
+                    <div class="flex items-center gap-2">
+                      <span class="w-2.5 h-2.5 rounded-full bg-white/20"></span>
+                      <span class="w-2.5 h-2.5 rounded-full bg-white/20"></span>
+                      <span class="w-2.5 h-2.5 rounded-full bg-white/20"></span>
+                    </div>
+                    <span class="text-[11px] font-mono-code text-neutral-400">
+                      {t.works.samlog.ui.badge}
+                    </span>
+                  </div>
+
+                  <!-- Quick Attendance List Mockup -->
+                  <div class="space-y-2.5 mb-5 font-mono-code text-xs">
+                    <div class="flex items-center justify-between p-2.5 rounded-md bg-white/[0.02] border border-white/5">
+                      <span class="text-neutral-200 font-medium">{t.works.samlog.ui.student1Name}</span>
+                      <span class="text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded text-[11px] border border-emerald-800/30">
+                        {t.works.samlog.ui.student1Status}
+                      </span>
+                    </div>
+                    <div class="flex items-center justify-between p-2.5 rounded-md bg-white/[0.02] border border-white/5">
+                      <span class="text-neutral-200 font-medium">{t.works.samlog.ui.student2Name}</span>
+                      <span class="text-amber-400 bg-amber-950/40 px-2 py-0.5 rounded text-[11px] border border-amber-800/30">
+                        {t.works.samlog.ui.student2Status}
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Claude AI Generated Report Card -->
+                  <div class="rounded-md border border-white/10 bg-white/[0.02] p-4">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+                        <span class="text-xs font-semibold text-neutral-200">
+                          {t.works.samlog.ui.aiBoxTitle}
+                        </span>
+                      </div>
+                      <span class="text-[10px] font-mono-code text-indigo-300">
+                        Synthesized
+                      </span>
+                    </div>
+                    <p class="text-xs text-neutral-300 leading-relaxed italic font-light mb-3">
+                      {t.works.samlog.ui.aiBoxContent}
+                    </p>
+                    <div class="flex items-center justify-between text-[11px] text-neutral-400 pt-2 border-t border-white/5 font-mono-code">
+                      <span>{t.works.samlog.ui.aiBoxMeta}</span>
+                      <span class="text-neutral-400">[ Ready to Send ]</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </article>
+
+          <!-- WORK 02: DORIDAYS -->
+          <article class="rounded-xl border border-white/[0.1] bg-[#10121a]/60 backdrop-blur-sm overflow-hidden hover:border-white/25 transition-all duration-300">
+            <!-- Top Metadata Strip -->
+            <div class="px-6 py-4 border-b border-white/[0.08] flex flex-wrap items-center justify-between gap-4 text-xs font-mono-code text-neutral-400 bg-white/[0.01]">
+              <div class="flex items-center gap-3">
+                <span class="text-white font-bold">{t.works.doridays.index}</span>
+                <span>/</span>
+                <span class="tracking-wider uppercase">{t.works.doridays.category}</span>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full border border-sky-500/30 text-sky-300 text-[11px] bg-sky-500/10">
+                {t.works.doridays.status}
+              </span>
+            </div>
+
+            <!-- Content Grid: Story Left + Micro-UI Right -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 p-6 sm:p-10">
+              
+              <!-- Story & Description -->
+              <div class="lg:col-span-6 flex flex-col justify-between">
+                <div>
+                  <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 tracking-tight">
+                    {t.works.doridays.title}
+                  </h3>
+                  <p class="text-sm font-medium text-neutral-300 mb-6">
+                    {t.works.doridays.tagline}
+                  </p>
+                  <p class="text-sm text-neutral-400 leading-relaxed font-light mb-8">
+                    {t.works.doridays.problemSolution}
+                  </p>
+                </div>
+
+                <!-- Tags & Details -->
+                <div>
+                  <div class="flex flex-wrap gap-2 mb-6">
+                    {t.works.doridays.tags.map((tag) => (
+                      <span class="px-3 py-1 rounded-full text-xs font-mono-code border border-white/10 bg-white/[0.02] text-neutral-300">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div class="pt-4 border-t border-white/[0.08] flex items-center justify-between text-xs font-mono-code">
+                    <span class="text-neutral-400">Target: iOS 17+, iPadOS, macOS (SwiftUI)</span>
+                    <a href="mailto:contact@eone.one?subject=DoriDays Launch Alert" class="text-white hover:underline flex items-center gap-1">
+                      <span>{t.works.doridays.actionText}</span>
+                      <span>→</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Micro-UI Box: Apple Ecosystem Dynamic Island Mockup -->
+              <div class="lg:col-span-6">
+                <div class="rounded-lg border border-white/[0.1] bg-[#0c0d12] p-5 shadow-2xl flex flex-col justify-between h-full">
+                  
+                  <div class="flex items-center justify-between pb-4 mb-6 border-b border-white/[0.08]">
+                    <div class="flex items-center gap-2">
+                      <span class="w-2.5 h-2.5 rounded-full bg-white/20"></span>
+                      <span class="w-2.5 h-2.5 rounded-full bg-white/20"></span>
+                      <span class="w-2.5 h-2.5 rounded-full bg-white/20"></span>
+                    </div>
+                    <span class="text-[11px] font-mono-code text-neutral-400">
+                      {t.works.doridays.ui.badge}
+                    </span>
+                  </div>
+
+                  <!-- Dynamic Island Pill Mockup -->
+                  <div class="my-auto py-6 flex flex-col items-center justify-center">
+                    <div class="w-full max-w-sm rounded-full bg-black border border-white/15 px-6 py-3 flex items-center justify-between shadow-lg">
+                      <div class="flex items-center gap-3">
+                        <span class="text-lg">🌙</span>
+                        <div>
+                          <div class="text-xs font-bold text-white">{t.works.doridays.ui.eventTitle}</div>
+                          <div class="text-[10px] text-neutral-400 font-mono-code">{t.works.doridays.ui.eventSub}</div>
+                        </div>
+                      </div>
+                      <div class="text-xs font-mono-code text-sky-400 font-bold">
+                        {t.works.doridays.ui.countdownText}
+                      </div>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                      <span class="text-[11px] font-mono-code text-neutral-400">
+                        {t.works.doridays.ui.mascotNotice}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="pt-4 border-t border-white/[0.08] flex items-center justify-between text-[11px] font-mono-code text-neutral-400">
+                    <span>Engine: KASI Astronomical Offline Tables</span>
+                    <span>Sync: CloudKit</span>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- PHILOSOPHY / STUDIO PRINCIPLES -->
+      <section id="about" class="max-w-7xl mx-auto px-6 py-24 border-b border-white/[0.08]">
+        <div class="max-w-2xl mb-16">
+          <span class="text-xs font-mono-code text-neutral-400 uppercase tracking-widest block mb-2">
+            {t.about.eyebrow}
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">
+            {t.about.title}
+          </h2>
+          <p class="text-base text-neutral-400 leading-relaxed font-light">
+            {t.about.lead}
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {t.about.principles.map((item) => (
+            <div class="p-8 rounded-xl border border-white/[0.08] bg-white/[0.01] flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-mono-code text-neutral-400 block mb-6">[ {item.num} ]</span>
+                <h3 class="text-lg font-bold text-white mb-3 tracking-tight">{item.title}</h3>
+                <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed font-light">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- LAB NOTES (ENGINEERING BLOG) -->
+      <section class="max-w-7xl mx-auto px-6 py-24 border-b border-white/[0.08]">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+          <div>
+            <span class="text-xs font-mono-code text-neutral-400 uppercase tracking-widest block mb-2">
+              {t.blog.eyebrow}
+            </span>
+            <h2 class="text-3xl font-bold tracking-tight text-white">
+              {t.blog.title}
+            </h2>
+          </div>
+          <a
+            href="https://blog.eone.one"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-xs font-mono-code text-white hover:text-neutral-400 transition-colors uppercase flex items-center gap-1 group"
+          >
+            <span>{t.blog.viewAll}</span>
+            <span class="text-xs group-hover:translate-x-1 transition-transform">→</span>
+          </a>
+        </div>
+
+        <!-- Curated Articles List (Awwwards Editorial List) -->
+        <div class="divide-y divide-white/[0.08] border-y border-white/[0.08]">
+          {t.blog.articles.map((article) => (
+            <a
+              href={article.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:px-2 transition-all duration-200"
+            >
+              <div class="flex items-center gap-4">
+                <span class="text-xs font-mono-code text-neutral-400 group-hover:text-white transition-colors">↗</span>
+                <span class="text-sm sm:text-base font-medium text-neutral-200 group-hover:text-white transition-colors">
+                  {article.title}
+                </span>
+              </div>
+              <div class="flex items-center gap-4 text-xs font-mono-code text-neutral-400 sm:text-right">
+                <span>{article.category}</span>
+                <span>·</span>
+                <span>{article.date}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <!-- CONTACT / FINAL CALLOUT -->
+      <section id="contact" class="max-w-7xl mx-auto px-6 py-28">
+        <div class="max-w-3xl">
+          <span class="text-xs font-mono-code text-neutral-400 uppercase tracking-widest block mb-4">
+            [ CONTACT & COLLABORATION ]
+          </span>
+          <h2 class="text-3xl sm:text-5xl lg:text-6xl font-light text-white mb-8 tracking-tight leading-tight">
+            <span class="font-serif-display italic text-neutral-300 block">Let's build</span>
+            <span class="font-bold tracking-[-0.03em]">{t.footer.callout}</span>
+          </h2>
+          <div class="flex flex-wrap items-center gap-6 text-sm font-mono-code">
+            <a
+              href={`mailto:${t.footer.email}`}
+              class="px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-neutral-200 transition-all text-xs uppercase tracking-wider"
+            >
+              {t.footer.email}
+            </a>
+            <span class="text-neutral-400 text-xs">
+              Based in {t.footer.location}
+            </span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER / COLOPHON -->
+    <footer class="border-t border-white/[0.08] py-8 text-xs font-mono-code text-neutral-400">
+      <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          {t.footer.rights}
+        </div>
+        <div class="text-neutral-400">
+          {t.footer.colophon}
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</Layout>
