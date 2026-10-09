@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import BrandLogo from './BrandLogo.astro';
 import { translations, type Locale } from '../i18n/translations';
 
 interface Props {
@@ -11,61 +12,88 @@ const t = translations[locale];
 ---
 
 <Layout title={t.meta.title} description={t.meta.description} locale={locale}>
-  <div class="min-h-screen flex flex-col justify-between selection:bg-[#f5f5f7] selection:text-black">
+  <div class="min-h-screen flex flex-col justify-between selection:bg-[#111216] selection:text-white dark:selection:bg-white dark:selection:text-black">
     
     <!-- Top Bar / Navigation -->
-    <header class="border-b border-white/[0.08] sticky top-0 z-50 bg-[#0b0c10]/90 backdrop-blur-md">
+    <header class="border-b border-[var(--border-color)] sticky top-0 z-50 bg-[var(--header-bg)] backdrop-blur-md transition-colors duration-200">
       <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         
         <!-- Brand & Studio Tag -->
         <div class="flex items-center gap-4">
-          <a href={locale === 'ko' ? '/' : '/en'} class="flex items-center gap-2 group">
-            <span class="w-2.5 h-2.5 rounded-full bg-white group-hover:scale-125 transition-transform duration-300"></span>
-            <span class="text-sm font-semibold tracking-wider uppercase text-white font-mono-code">Eone Labs</span>
+          <a href={locale === 'ko' ? '/' : '/en'} class="flex items-center gap-2.5 group">
+            <BrandLogo size={26} class="group-hover:rotate-45 transition-transform duration-300" />
+            <span class="text-sm font-bold tracking-wider uppercase text-[var(--text-primary)] font-mono-code">Eone Labs</span>
           </a>
-          <span class="hidden sm:inline-block text-[11px] text-neutral-400 font-mono-code tracking-wider border-l border-white/10 pl-4 uppercase">
+          <span class="hidden sm:inline-block text-[11px] text-[var(--text-muted)] font-mono-code tracking-wider border-l border-[var(--border-color)] pl-4 uppercase">
             Studio / Seoul
           </span>
         </div>
 
-        <!-- Links -->
-        <nav class="flex items-center gap-6 sm:gap-8 text-xs font-mono-code tracking-wide">
-          <a href="#works" class="text-neutral-400 hover:text-white transition-colors uppercase">
+        <!-- Links & Controls -->
+        <nav class="flex items-center gap-4 sm:gap-6 text-xs font-mono-code tracking-wide">
+          <a href="#works" class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors uppercase">
             {t.nav.works}
           </a>
-          <a href="#about" class="hidden md:inline-block text-neutral-400 hover:text-white transition-colors uppercase">
+          <a href="#about" class="hidden md:inline-block text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors uppercase">
             {t.nav.about}
           </a>
-          <a href="https://blog.eone.one" target="_blank" rel="noopener noreferrer" class="text-neutral-400 hover:text-white transition-colors uppercase flex items-center gap-1 group">
+          <a href="https://blog.eone.one" target="_blank" rel="noopener noreferrer" class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors uppercase flex items-center gap-1 group">
             <span>{t.nav.notes}</span>
-            <span class="text-[10px] text-neutral-400 group-hover:text-white transition-colors">↗</span>
+            <span class="text-[10px] text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors">↗</span>
           </a>
-          <a href="#contact" class="hidden sm:inline-block text-neutral-400 hover:text-white transition-colors uppercase">
+          <a href="#contact" class="hidden sm:inline-block text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors uppercase">
             {t.nav.contact}
           </a>
 
-          <!-- Language Switcher -->
-          <div class="flex items-center p-0.5 rounded-full border border-white/10 bg-white/[0.02] text-[11px] font-mono-code">
-            <a
-              href="/"
-              class={`px-2.5 py-0.5 rounded-full transition-all ${
-                locale === 'ko'
-                  ? 'bg-white text-black font-semibold shadow-xs'
-                  : 'text-neutral-400 hover:text-white'
-              }`}
-            >
-              KO
-            </a>
-            <a
-              href="/en"
-              class={`px-2.5 py-0.5 rounded-full transition-all ${
-                locale === 'en'
-                  ? 'bg-white text-black font-semibold shadow-xs'
-                  : 'text-neutral-400 hover:text-white'
-              }`}
-            >
-              EN
-            </a>
+          <!-- Controls Group: Theme Switcher & Language Switcher -->
+          <div class="flex items-center gap-2">
+            <!-- Theme Switcher Pill -->
+            <div class="flex items-center p-0.5 rounded-full border border-[var(--pill-border)] bg-[var(--pill-bg)] text-[11px] font-mono-code">
+              <button
+                id="theme-light-btn"
+                type="button"
+                class="px-2 py-0.5 rounded-full transition-all flex items-center gap-1 cursor-pointer"
+                title={t.nav.themeLight}
+                aria-label={t.nav.themeLight}
+              >
+                <span>☼</span>
+                <span class="hidden md:inline text-[10px]">{t.nav.themeLight}</span>
+              </button>
+              <button
+                id="theme-dark-btn"
+                type="button"
+                class="px-2 py-0.5 rounded-full transition-all flex items-center gap-1 cursor-pointer"
+                title={t.nav.themeDark}
+                aria-label={t.nav.themeDark}
+              >
+                <span>☾</span>
+                <span class="hidden md:inline text-[10px]">{t.nav.themeDark}</span>
+              </button>
+            </div>
+
+            <!-- Language Switcher Pill -->
+            <div class="flex items-center p-0.5 rounded-full border border-[var(--pill-border)] bg-[var(--pill-bg)] text-[11px] font-mono-code">
+              <a
+                href="/"
+                class={`px-2 py-0.5 rounded-full transition-all ${
+                  locale === 'ko'
+                    ? 'bg-[var(--text-primary)] text-[var(--bg-page)] font-bold shadow-xs'
+                    : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                }`}
+              >
+                KO
+              </a>
+              <a
+                href="/en"
+                class={`px-2 py-0.5 rounded-full transition-all ${
+                  locale === 'en'
+                    ? 'bg-[var(--text-primary)] text-[var(--bg-page)] font-bold shadow-xs'
+                    : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                }`}
+              >
+                EN
+              </a>
+            </div>
           </div>
         </nav>
       </div>
@@ -74,10 +102,10 @@ const t = translations[locale];
     <main class="flex-1">
       
       <!-- HERO SECTION (Awwwards Style Editorial) -->
-      <section class="max-w-7xl mx-auto px-6 pt-20 pb-24 lg:pt-28 lg:pb-32 border-b border-white/[0.08]">
+      <section class="max-w-7xl mx-auto px-6 pt-20 pb-24 lg:pt-28 lg:pb-32 border-b border-[var(--border-color)]">
         
         <!-- Metadata Header Row -->
-        <div class="flex flex-wrap items-center justify-between gap-4 text-xs font-mono-code text-neutral-400 mb-12 uppercase tracking-wider">
+        <div class="flex flex-wrap items-center justify-between gap-4 text-xs font-mono-code text-[var(--text-muted)] mb-12 uppercase tracking-wider">
           <div class="flex items-center gap-3">
             <span>[ {t.hero.badgeLocation} ]</span>
             <span>·</span>
@@ -90,30 +118,30 @@ const t = translations[locale];
 
         <!-- Headline -->
         <div class="max-w-5xl mb-12">
-          <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] tracking-tight leading-[1.1] text-white">
-            <span class="font-serif-display italic font-light text-neutral-300 block mb-2">{t.hero.headlineItalic}</span>
+          <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] tracking-tight leading-[1.1] text-[var(--text-primary)]">
+            <span class="font-serif-display italic font-light text-[var(--text-italic)] block mb-2">{t.hero.headlineItalic}</span>
             <span class="font-bold tracking-[-0.03em]">{t.hero.headlineMain}</span>
           </h1>
         </div>
 
         <!-- Subheadline & Action Row -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-end pt-8 border-t border-white/[0.08]">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-end pt-8 border-t border-[var(--border-color)]">
           <div class="md:col-span-8">
-            <p class="text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl font-light">
+            <p class="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl font-light">
               {t.hero.subheadline}
             </p>
           </div>
 
           <div class="md:col-span-4 flex flex-col sm:flex-row md:flex-col items-start md:items-end justify-between gap-4">
             <!-- Active Pipeline Pill -->
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.02] text-xs font-mono-code text-neutral-300">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--pill-border)] bg-[var(--pill-bg)] text-xs font-mono-code text-[var(--text-secondary)]">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
               <span>{t.hero.statusText}</span>
             </div>
 
             <a
               href="#works"
-              class="inline-flex items-center gap-2 text-xs font-mono-code uppercase tracking-wider text-white hover:text-neutral-400 transition-colors"
+              class="inline-flex items-center gap-2 text-xs font-mono-code uppercase tracking-wider text-[var(--text-primary)] hover:text-[var(--text-muted)] transition-colors"
             >
               <span>{t.hero.ctaWorks}</span>
               <span class="text-sm">↓</span>
@@ -123,19 +151,19 @@ const t = translations[locale];
       </section>
 
       <!-- FEATURED WORKS SECTION -->
-      <section id="works" class="max-w-7xl mx-auto px-6 py-24 border-b border-white/[0.08]">
+      <section id="works" class="max-w-7xl mx-auto px-6 py-24 border-b border-[var(--border-color)]">
         
         <!-- Section Header -->
-        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-16 pb-6 border-b border-white/[0.08]">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-16 pb-6 border-b border-[var(--border-color)]">
           <div>
-            <span class="text-xs font-mono-code text-neutral-400 uppercase tracking-widest block mb-2">
+            <span class="text-xs font-mono-code text-[var(--text-muted)] uppercase tracking-widest block mb-2">
               {t.works.eyebrow}
             </span>
-            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--text-primary)]">
               {t.works.title}
             </h2>
           </div>
-          <p class="text-xs font-mono-code text-neutral-400 max-w-md sm:text-right">
+          <p class="text-xs font-mono-code text-[var(--text-muted)] max-w-md sm:text-right">
             {t.works.description}
           </p>
         </div>
@@ -143,15 +171,15 @@ const t = translations[locale];
         <div class="space-y-20">
           
           <!-- WORK 01: SAMLOG -->
-          <article class="rounded-xl border border-white/[0.1] bg-[#10121a]/60 backdrop-blur-sm overflow-hidden hover:border-white/25 transition-all duration-300">
+          <article class="rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] shadow-[var(--card-shadow)] overflow-hidden hover:border-[var(--border-hover)] transition-all duration-300">
             <!-- Top Metadata Strip -->
-            <div class="px-6 py-4 border-b border-white/[0.08] flex flex-wrap items-center justify-between gap-4 text-xs font-mono-code text-neutral-400 bg-white/[0.01]">
+            <div class="px-6 py-4 border-b border-[var(--border-color)] flex flex-wrap items-center justify-between gap-4 text-xs font-mono-code text-[var(--text-muted)] bg-[var(--bg-surface-subtle)]">
               <div class="flex items-center gap-3">
-                <span class="text-white font-bold">{t.works.samlog.index}</span>
+                <span class="text-[var(--text-primary)] font-bold">{t.works.samlog.index}</span>
                 <span>/</span>
                 <span class="tracking-wider uppercase">{t.works.samlog.category}</span>
               </div>
-              <span class="px-2.5 py-0.5 rounded-full border border-amber-500/30 text-amber-300 text-[11px] bg-amber-500/10">
+              <span class="px-2.5 py-0.5 rounded-full border border-amber-500/30 text-amber-700 dark:text-amber-300 text-[11px] bg-amber-500/10">
                 {t.works.samlog.status}
               </span>
             </div>
@@ -162,13 +190,13 @@ const t = translations[locale];
               <!-- Story & Description -->
               <div class="lg:col-span-6 flex flex-col justify-between">
                 <div>
-                  <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 tracking-tight">
+                  <h3 class="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] mb-3 tracking-tight">
                     {t.works.samlog.title}
                   </h3>
-                  <p class="text-sm font-medium text-neutral-300 mb-6">
+                  <p class="text-sm font-medium text-[var(--text-secondary)] mb-6">
                     {t.works.samlog.tagline}
                   </p>
-                  <p class="text-sm text-neutral-400 leading-relaxed font-light mb-8">
+                  <p class="text-sm text-[var(--text-secondary)] leading-relaxed font-light mb-8">
                     {t.works.samlog.problemSolution}
                   </p>
                 </div>
@@ -177,15 +205,15 @@ const t = translations[locale];
                 <div>
                   <div class="flex flex-wrap gap-2 mb-6">
                     {t.works.samlog.tags.map((tag) => (
-                      <span class="px-3 py-1 rounded-full text-xs font-mono-code border border-white/10 bg-white/[0.02] text-neutral-300">
+                      <span class="px-3 py-1 rounded-full text-xs font-mono-code border border-[var(--pill-border)] bg-[var(--pill-bg)] text-[var(--text-secondary)]">
                         {tag}
                       </span>
                     ))}
                   </div>
 
-                  <div class="pt-4 border-t border-white/[0.08] flex items-center justify-between text-xs font-mono-code">
-                    <span class="text-neutral-400">Architecture: PWA + Anthropic Claude API</span>
-                    <a href="mailto:contact@eone.one?subject=SamLog Beta Inquiry" class="text-white hover:underline flex items-center gap-1">
+                  <div class="pt-4 border-t border-[var(--border-color)] flex items-center justify-between text-xs font-mono-code">
+                    <span class="text-[var(--text-muted)]">Architecture: PWA + Anthropic Claude API</span>
+                    <a href="mailto:contact@eone.one?subject=SamLog Beta Inquiry" class="text-[var(--text-primary)] hover:underline flex items-center gap-1 font-medium">
                       <span>Inquire Access</span>
                       <span>→</span>
                     </a>
@@ -195,55 +223,55 @@ const t = translations[locale];
 
               <!-- Micro-UI Box: Authentic Component Mockup (Anti-AI Cliché) -->
               <div class="lg:col-span-6">
-                <div class="rounded-lg border border-white/[0.1] bg-[#0c0d12] p-5 shadow-2xl">
+                <div class="rounded-lg border border-[var(--border-color)] bg-[var(--bg-mockup)] p-5 shadow-sm">
                   
                   <!-- Window Mockup Controls -->
-                  <div class="flex items-center justify-between pb-4 mb-4 border-b border-white/[0.08]">
+                  <div class="flex items-center justify-between pb-4 mb-4 border-b border-[var(--border-color)]">
                     <div class="flex items-center gap-2">
-                      <span class="w-2.5 h-2.5 rounded-full bg-white/20"></span>
-                      <span class="w-2.5 h-2.5 rounded-full bg-white/20"></span>
-                      <span class="w-2.5 h-2.5 rounded-full bg-white/20"></span>
+                      <span class="w-2.5 h-2.5 rounded-full bg-neutral-300 dark:bg-white/20"></span>
+                      <span class="w-2.5 h-2.5 rounded-full bg-neutral-300 dark:bg-white/20"></span>
+                      <span class="w-2.5 h-2.5 rounded-full bg-neutral-300 dark:bg-white/20"></span>
                     </div>
-                    <span class="text-[11px] font-mono-code text-neutral-400">
+                    <span class="text-[11px] font-mono-code text-[var(--text-muted)]">
                       {t.works.samlog.ui.badge}
                     </span>
                   </div>
 
                   <!-- Quick Attendance List Mockup -->
                   <div class="space-y-2.5 mb-5 font-mono-code text-xs">
-                    <div class="flex items-center justify-between p-2.5 rounded-md bg-white/[0.02] border border-white/5">
-                      <span class="text-neutral-200 font-medium">{t.works.samlog.ui.student1Name}</span>
-                      <span class="text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded text-[11px] border border-emerald-800/30">
+                    <div class="flex items-center justify-between p-2.5 rounded-md bg-[var(--bg-mockup-item)] border border-[var(--border-color)] shadow-xs">
+                      <span class="text-[var(--text-primary)] font-medium">{t.works.samlog.ui.student1Name}</span>
+                      <span class="text-emerald-700 bg-emerald-100/80 dark:text-emerald-400 dark:bg-emerald-950/40 px-2 py-0.5 rounded text-[11px] border border-emerald-300/40 dark:border-emerald-800/30">
                         {t.works.samlog.ui.student1Status}
                       </span>
                     </div>
-                    <div class="flex items-center justify-between p-2.5 rounded-md bg-white/[0.02] border border-white/5">
-                      <span class="text-neutral-200 font-medium">{t.works.samlog.ui.student2Name}</span>
-                      <span class="text-amber-400 bg-amber-950/40 px-2 py-0.5 rounded text-[11px] border border-amber-800/30">
+                    <div class="flex items-center justify-between p-2.5 rounded-md bg-[var(--bg-mockup-item)] border border-[var(--border-color)] shadow-xs">
+                      <span class="text-[var(--text-primary)] font-medium">{t.works.samlog.ui.student2Name}</span>
+                      <span class="text-amber-700 bg-amber-100/80 dark:text-amber-400 dark:bg-amber-950/40 px-2 py-0.5 rounded text-[11px] border border-amber-300/40 dark:border-amber-800/30">
                         {t.works.samlog.ui.student2Status}
                       </span>
                     </div>
                   </div>
 
                   <!-- Claude AI Generated Report Card -->
-                  <div class="rounded-md border border-white/10 bg-white/[0.02] p-4">
+                  <div class="rounded-md border border-[var(--border-color)] bg-[var(--bg-mockup-item)] p-4 shadow-xs">
                     <div class="flex items-center justify-between mb-2">
                       <div class="flex items-center gap-2">
-                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
-                        <span class="text-xs font-semibold text-neutral-200">
+                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+                        <span class="text-xs font-semibold text-[var(--text-primary)]">
                           {t.works.samlog.ui.aiBoxTitle}
                         </span>
                       </div>
-                      <span class="text-[10px] font-mono-code text-indigo-300">
+                      <span class="text-[10px] font-mono-code text-indigo-600 dark:text-indigo-300 font-medium">
                         Synthesized
                       </span>
                     </div>
-                    <p class="text-xs text-neutral-300 leading-relaxed italic font-light mb-3">
+                    <p class="text-xs text-[var(--text-secondary)] leading-relaxed italic font-light mb-3">
                       {t.works.samlog.ui.aiBoxContent}
                     </p>
-                    <div class="flex items-center justify-between text-[11px] text-neutral-400 pt-2 border-t border-white/5 font-mono-code">
+                    <div class="flex items-center justify-between text-[11px] text-[var(--text-muted)] pt-2 border-t border-[var(--border-color)] font-mono-code">
                       <span>{t.works.samlog.ui.aiBoxMeta}</span>
-                      <span class="text-neutral-400">[ Ready to Send ]</span>
+                      <span class="text-[var(--text-muted)]">[ Ready to Send ]</span>
                     </div>
                   </div>
 
@@ -254,15 +282,15 @@ const t = translations[locale];
           </article>
 
           <!-- WORK 02: DORIDAYS -->
-          <article class="rounded-xl border border-white/[0.1] bg-[#10121a]/60 backdrop-blur-sm overflow-hidden hover:border-white/25 transition-all duration-300">
+          <article class="rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] shadow-[var(--card-shadow)] overflow-hidden hover:border-[var(--border-hover)] transition-all duration-300">
             <!-- Top Metadata Strip -->
-            <div class="px-6 py-4 border-b border-white/[0.08] flex flex-wrap items-center justify-between gap-4 text-xs font-mono-code text-neutral-400 bg-white/[0.01]">
+            <div class="px-6 py-4 border-b border-[var(--border-color)] flex flex-wrap items-center justify-between gap-4 text-xs font-mono-code text-[var(--text-muted)] bg-[var(--bg-surface-subtle)]">
               <div class="flex items-center gap-3">
-                <span class="text-white font-bold">{t.works.doridays.index}</span>
+                <span class="text-[var(--text-primary)] font-bold">{t.works.doridays.index}</span>
                 <span>/</span>
                 <span class="tracking-wider uppercase">{t.works.doridays.category}</span>
               </div>
-              <span class="px-2.5 py-0.5 rounded-full border border-sky-500/30 text-sky-300 text-[11px] bg-sky-500/10">
+              <span class="px-2.5 py-0.5 rounded-full border border-sky-500/30 text-sky-700 dark:text-sky-300 text-[11px] bg-sky-500/10">
                 {t.works.doridays.status}
               </span>
             </div>
@@ -273,13 +301,13 @@ const t = translations[locale];
               <!-- Story & Description -->
               <div class="lg:col-span-6 flex flex-col justify-between">
                 <div>
-                  <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 tracking-tight">
+                  <h3 class="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] mb-3 tracking-tight">
                     {t.works.doridays.title}
                   </h3>
-                  <p class="text-sm font-medium text-neutral-300 mb-6">
+                  <p class="text-sm font-medium text-[var(--text-secondary)] mb-6">
                     {t.works.doridays.tagline}
                   </p>
-                  <p class="text-sm text-neutral-400 leading-relaxed font-light mb-8">
+                  <p class="text-sm text-[var(--text-secondary)] leading-relaxed font-light mb-8">
                     {t.works.doridays.problemSolution}
                   </p>
                 </div>
@@ -288,15 +316,15 @@ const t = translations[locale];
                 <div>
                   <div class="flex flex-wrap gap-2 mb-6">
                     {t.works.doridays.tags.map((tag) => (
-                      <span class="px-3 py-1 rounded-full text-xs font-mono-code border border-white/10 bg-white/[0.02] text-neutral-300">
+                      <span class="px-3 py-1 rounded-full text-xs font-mono-code border border-[var(--pill-border)] bg-[var(--pill-bg)] text-[var(--text-secondary)]">
                         {tag}
                       </span>
                     ))}
                   </div>
 
-                  <div class="pt-4 border-t border-white/[0.08] flex items-center justify-between text-xs font-mono-code">
-                    <span class="text-neutral-400">Target: iOS 17+, iPadOS, macOS (SwiftUI)</span>
-                    <a href="mailto:contact@eone.one?subject=DoriDays Launch Alert" class="text-white hover:underline flex items-center gap-1">
+                  <div class="pt-4 border-t border-[var(--border-color)] flex items-center justify-between text-xs font-mono-code">
+                    <span class="text-[var(--text-muted)]">Target: iOS 17+, iPadOS, macOS (SwiftUI)</span>
+                    <a href="mailto:contact@eone.one?subject=DoriDays Launch Alert" class="text-[var(--text-primary)] hover:underline flex items-center gap-1 font-medium">
                       <span>{t.works.doridays.actionText}</span>
                       <span>→</span>
                     </a>
@@ -306,22 +334,22 @@ const t = translations[locale];
 
               <!-- Micro-UI Box: Apple Ecosystem Dynamic Island Mockup -->
               <div class="lg:col-span-6">
-                <div class="rounded-lg border border-white/[0.1] bg-[#0c0d12] p-5 shadow-2xl flex flex-col justify-between h-full">
+                <div class="rounded-lg border border-[var(--border-color)] bg-[var(--bg-mockup)] p-5 shadow-sm flex flex-col justify-between h-full">
                   
-                  <div class="flex items-center justify-between pb-4 mb-6 border-b border-white/[0.08]">
+                  <div class="flex items-center justify-between pb-4 mb-6 border-b border-[var(--border-color)]">
                     <div class="flex items-center gap-2">
-                      <span class="w-2.5 h-2.5 rounded-full bg-white/20"></span>
-                      <span class="w-2.5 h-2.5 rounded-full bg-white/20"></span>
-                      <span class="w-2.5 h-2.5 rounded-full bg-white/20"></span>
+                      <span class="w-2.5 h-2.5 rounded-full bg-neutral-300 dark:bg-white/20"></span>
+                      <span class="w-2.5 h-2.5 rounded-full bg-neutral-300 dark:bg-white/20"></span>
+                      <span class="w-2.5 h-2.5 rounded-full bg-neutral-300 dark:bg-white/20"></span>
                     </div>
-                    <span class="text-[11px] font-mono-code text-neutral-400">
+                    <span class="text-[11px] font-mono-code text-[var(--text-muted)]">
                       {t.works.doridays.ui.badge}
                     </span>
                   </div>
 
                   <!-- Dynamic Island Pill Mockup -->
                   <div class="my-auto py-6 flex flex-col items-center justify-center">
-                    <div class="w-full max-w-sm rounded-full bg-black border border-white/15 px-6 py-3 flex items-center justify-between shadow-lg">
+                    <div class="w-full max-w-sm rounded-full bg-[#111216] text-white border border-white/20 px-6 py-3 flex items-center justify-between shadow-lg">
                       <div class="flex items-center gap-3">
                         <span class="text-lg">🌙</span>
                         <div>
@@ -335,13 +363,13 @@ const t = translations[locale];
                     </div>
 
                     <div class="mt-6 text-center">
-                      <span class="text-[11px] font-mono-code text-neutral-400">
+                      <span class="text-[11px] font-mono-code text-[var(--text-muted)]">
                         {t.works.doridays.ui.mascotNotice}
                       </span>
                     </div>
                   </div>
 
-                  <div class="pt-4 border-t border-white/[0.08] flex items-center justify-between text-[11px] font-mono-code text-neutral-400">
+                  <div class="pt-4 border-t border-[var(--border-color)] flex items-center justify-between text-[11px] font-mono-code text-[var(--text-muted)]">
                     <span>Engine: KASI Astronomical Offline Tables</span>
                     <span>Sync: CloudKit</span>
                   </div>
@@ -356,26 +384,26 @@ const t = translations[locale];
       </section>
 
       <!-- PHILOSOPHY / STUDIO PRINCIPLES -->
-      <section id="about" class="max-w-7xl mx-auto px-6 py-24 border-b border-white/[0.08]">
+      <section id="about" class="max-w-7xl mx-auto px-6 py-24 border-b border-[var(--border-color)]">
         <div class="max-w-2xl mb-16">
-          <span class="text-xs font-mono-code text-neutral-400 uppercase tracking-widest block mb-2">
+          <span class="text-xs font-mono-code text-[var(--text-muted)] uppercase tracking-widest block mb-2">
             {t.about.eyebrow}
           </span>
-          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">
+          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--text-primary)] mb-4">
             {t.about.title}
           </h2>
-          <p class="text-base text-neutral-400 leading-relaxed font-light">
+          <p class="text-base text-[var(--text-secondary)] leading-relaxed font-light">
             {t.about.lead}
           </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           {t.about.principles.map((item) => (
-            <div class="p-8 rounded-xl border border-white/[0.08] bg-white/[0.01] flex flex-col justify-between">
+            <div class="p-8 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] shadow-[var(--card-shadow)] flex flex-col justify-between hover:border-[var(--border-hover)] transition-all">
               <div>
-                <span class="text-xs font-mono-code text-neutral-400 block mb-6">[ {item.num} ]</span>
-                <h3 class="text-lg font-bold text-white mb-3 tracking-tight">{item.title}</h3>
-                <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed font-light">{item.desc}</p>
+                <span class="text-xs font-mono-code text-[var(--text-muted)] block mb-6">[ {item.num} ]</span>
+                <h3 class="text-lg font-bold text-[var(--text-primary)] mb-3 tracking-tight">{item.title}</h3>
+                <p class="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-light">{item.desc}</p>
               </div>
             </div>
           ))}
@@ -383,13 +411,13 @@ const t = translations[locale];
       </section>
 
       <!-- LAB NOTES (ENGINEERING BLOG) -->
-      <section class="max-w-7xl mx-auto px-6 py-24 border-b border-white/[0.08]">
+      <section class="max-w-7xl mx-auto px-6 py-24 border-b border-[var(--border-color)]">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
           <div>
-            <span class="text-xs font-mono-code text-neutral-400 uppercase tracking-widest block mb-2">
+            <span class="text-xs font-mono-code text-[var(--text-muted)] uppercase tracking-widest block mb-2">
               {t.blog.eyebrow}
             </span>
-            <h2 class="text-3xl font-bold tracking-tight text-white">
+            <h2 class="text-3xl font-bold tracking-tight text-[var(--text-primary)]">
               {t.blog.title}
             </h2>
           </div>
@@ -397,7 +425,7 @@ const t = translations[locale];
             href="https://blog.eone.one"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-xs font-mono-code text-white hover:text-neutral-400 transition-colors uppercase flex items-center gap-1 group"
+            class="text-xs font-mono-code text-[var(--text-primary)] hover:text-[var(--text-muted)] transition-colors uppercase flex items-center gap-1 group font-medium"
           >
             <span>{t.blog.viewAll}</span>
             <span class="text-xs group-hover:translate-x-1 transition-transform">→</span>
@@ -405,7 +433,7 @@ const t = translations[locale];
         </div>
 
         <!-- Curated Articles List (Awwwards Editorial List) -->
-        <div class="divide-y divide-white/[0.08] border-y border-white/[0.08]">
+        <div class="divide-y divide-[var(--border-color)] border-y border-[var(--border-color)]">
           {t.blog.articles.map((article) => (
             <a
               href={article.url}
@@ -414,12 +442,12 @@ const t = translations[locale];
               class="group py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:px-2 transition-all duration-200"
             >
               <div class="flex items-center gap-4">
-                <span class="text-xs font-mono-code text-neutral-400 group-hover:text-white transition-colors">↗</span>
-                <span class="text-sm sm:text-base font-medium text-neutral-200 group-hover:text-white transition-colors">
+                <span class="text-xs font-mono-code text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors">↗</span>
+                <span class="text-sm sm:text-base font-medium text-[var(--text-primary)] transition-colors">
                   {article.title}
                 </span>
               </div>
-              <div class="flex items-center gap-4 text-xs font-mono-code text-neutral-400 sm:text-right">
+              <div class="flex items-center gap-4 text-xs font-mono-code text-[var(--text-muted)] sm:text-right">
                 <span>{article.category}</span>
                 <span>·</span>
                 <span>{article.date}</span>
@@ -432,21 +460,21 @@ const t = translations[locale];
       <!-- CONTACT / FINAL CALLOUT -->
       <section id="contact" class="max-w-7xl mx-auto px-6 py-28">
         <div class="max-w-3xl">
-          <span class="text-xs font-mono-code text-neutral-400 uppercase tracking-widest block mb-4">
+          <span class="text-xs font-mono-code text-[var(--text-muted)] uppercase tracking-widest block mb-4">
             [ CONTACT & COLLABORATION ]
           </span>
-          <h2 class="text-3xl sm:text-5xl lg:text-6xl font-light text-white mb-8 tracking-tight leading-tight">
-            <span class="font-serif-display italic text-neutral-300 block">Let's build</span>
+          <h2 class="text-3xl sm:text-5xl lg:text-6xl font-light text-[var(--text-primary)] mb-8 tracking-tight leading-tight">
+            <span class="font-serif-display italic text-[var(--text-italic)] block">Let's build</span>
             <span class="font-bold tracking-[-0.03em]">{t.footer.callout}</span>
           </h2>
           <div class="flex flex-wrap items-center gap-6 text-sm font-mono-code">
             <a
               href={`mailto:${t.footer.email}`}
-              class="px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-neutral-200 transition-all text-xs uppercase tracking-wider"
+              class="px-6 py-3 rounded-full bg-[var(--accent-btn-bg)] text-[var(--accent-btn-text)] font-semibold hover:bg-[var(--accent-btn-hover)] transition-all text-xs uppercase tracking-wider shadow-md"
             >
               {t.footer.email}
             </a>
-            <span class="text-neutral-400 text-xs">
+            <span class="text-[var(--text-muted)] text-xs">
               Based in {t.footer.location}
             </span>
           </div>
@@ -456,16 +484,52 @@ const t = translations[locale];
     </main>
 
     <!-- FOOTER / COLOPHON -->
-    <footer class="border-t border-white/[0.08] py-8 text-xs font-mono-code text-neutral-400">
+    <footer class="border-t border-[var(--border-color)] py-8 text-xs font-mono-code text-[var(--text-muted)]">
       <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           {t.footer.rights}
         </div>
-        <div class="text-neutral-400">
+        <div class="text-[var(--text-muted)]">
           {t.footer.colophon}
         </div>
       </div>
     </footer>
 
   </div>
+
+  <!-- Theme Toggle Client Script -->
+  <script is:inline>
+    function updateThemeUI() {
+      const isDark = document.documentElement.classList.contains('dark');
+      const lightBtn = document.getElementById('theme-light-btn');
+      const darkBtn = document.getElementById('theme-dark-btn');
+
+      if (!lightBtn || !darkBtn) return;
+
+      if (isDark) {
+        darkBtn.className = 'px-2 py-0.5 rounded-full transition-all flex items-center gap-1 cursor-pointer bg-[var(--text-primary)] text-[var(--bg-page)] font-bold shadow-xs';
+        lightBtn.className = 'px-2 py-0.5 rounded-full transition-all flex items-center gap-1 cursor-pointer text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+      } else {
+        lightBtn.className = 'px-2 py-0.5 rounded-full transition-all flex items-center gap-1 cursor-pointer bg-[var(--text-primary)] text-[var(--bg-page)] font-bold shadow-xs';
+        darkBtn.className = 'px-2 py-0.5 rounded-full transition-all flex items-center gap-1 cursor-pointer text-[var(--text-muted)] hover:text-[var(--text-primary)]';
+      }
+    }
+
+    function setTheme(theme) {
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('eone-theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('eone-theme', 'light');
+      }
+      updateThemeUI();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateThemeUI();
+      document.getElementById('theme-light-btn')?.addEventListener('click', () => setTheme('light'));
+      document.getElementById('theme-dark-btn')?.addEventListener('click', () => setTheme('dark'));
+    });
+  </script>
 </Layout>

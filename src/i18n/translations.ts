@@ -11,6 +11,8 @@ export const translations = {
       about: "철학",
       notes: "랩 노트 (블로그)",
       contact: "문의",
+      themeLight: "라이트",
+      themeDark: "다크",
     },
     hero: {
       badgeLocation: "SEOUL, KOREA",
@@ -131,6 +133,8 @@ export const translations = {
       about: "Philosophy",
       notes: "Lab Notes (Blog)",
       contact: "Contact",
+      themeLight: "Light",
+      themeDark: "Dark",
     },
     hero: {
       badgeLocation: "SEOUL, KOREA",
