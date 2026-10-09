@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-bg: #090a0f;
+    --color-card: #13151f;
+    --color-border: #232738;
+  }
+}
